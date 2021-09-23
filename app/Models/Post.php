@@ -5,6 +5,7 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\File;
 
 class Post
 {
@@ -20,6 +21,7 @@ class Post
     }
     public static function all(): array
     {
-        return [];
+        $posts = File::files(resource_path("posts"));
+        return $posts;
     }
 }
