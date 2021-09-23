@@ -18,4 +18,8 @@ class Post
         }
         return cache()->remember("posts.{$slug}", now()->addHour(), fn() => file_get_contents($path));
     }
+    public static function all(): array
+    {
+        return [];
+    }
 }
