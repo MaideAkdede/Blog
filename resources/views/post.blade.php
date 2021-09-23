@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('components.layout')
 
 @section('main_content')
 <h1>{{ $post->title }}</h1>

@@ -1,18 +1,15 @@
-@extends('layout')
-
-@section('main_content')
-    <h1>Hello world</h1>
-    @foreach($posts as $post)
-        <article>
-            <h2><a href="/posts/{{ $post->slug }}">{{ $post->title }}</a></h2>
-            <p>Published on : {{ $post->date }}</p>
-            <p>{{ $post->excerpt }}</p>
-        </article>
-    @endforeach
-@endsection
-
-@section('main_title')
-    <title>
+<x-layout>
+    <x-slot name="mainContent">
+        <h1>Hello world</h1>
+        @foreach ($posts as $post)
+            <article>
+                <h2><a href="/posts/{{ $post->slug }}">{{ $post->title }}</a></h2>
+                <p>Published on : {{ $post->date }}</p>
+                <p>{{ $post->excerpt }}</p>
+            </article>
+        @endforeach
+    </x-slot>
+    <x-slot name="mainTitle">
         {{ $page_title }}
-    </title>
-@endsection
+    </x-slot>
+</x-layout>
