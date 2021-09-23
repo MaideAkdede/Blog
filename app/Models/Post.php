@@ -40,13 +40,9 @@ class Post
 
     public static function find($slug)
     {
-        base_path();
-        $path = resource_path("posts/{$slug}.html");
-        //(!file_exists($path = resource_path("posts/{$slug}.html"))
-        if (!file_exists($path)) {
-            throw new ModelNotFoundException();
-        }
-        return cache()->remember("posts.{$slug}", now()->addHour(), fn() => file_get_contents($path));
+        $posts = static::all();
+        return $posts->firstWhere('slug', $slug);
+        //ddd();
     }
 
     public static function all(): Collection
@@ -54,17 +50,17 @@ class Post
         $files = File::files(resource_path("posts"));
 
         return collect($files)
-            ->map(function ($file){
-            $document = YamlFrontMatter::parseFile($file);
-            return new Post(
-                $document->title,
-                $document->body(),
-                $document->excerpt,
-                $document->date,
-                $document->slug
-            );
-        });
-        // $posts = [];
+            ->map(function ($file) {
+                $document = YamlFrontMatter::parseFile($file);
+
+                return new Post(
+                    $document->title,
+                    $document->body(),
+                    $document->excerpt,
+                    $document->date,
+                    $document->slug
+                );
+            });
         /*
          * foreach ($files as $file) {
             $document = YamlFrontMatter::parseFile($file);
@@ -77,8 +73,6 @@ class Post
             );
         }
         */
-        return $posts;
-
         /*$posts =  array_map()*/
         /* $posts = File::files(resource_path("posts"));
          $models = array_map(function ($post) {
