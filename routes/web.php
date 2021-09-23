@@ -22,13 +22,12 @@ Route::get('/posts', function () {
 
 Route::get('/', function () {
     $posts = Post::all();
-
     return view('posts', [
-        'posts'=>$posts
+        'posts' => $posts
     ]);
 });
 
 Route::get('/posts/{post}', function ($slug) {
     $post = Post::find($slug);
     return view('post', compact('post'));
-})->where('post', '[A-z_\-]+');
+})->where('post', '[A-z0-9_\-]+');
