@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Collection;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 class Post
@@ -48,11 +49,24 @@ class Post
         return cache()->remember("posts.{$slug}", now()->addHour(), fn() => file_get_contents($path));
     }
 
-    public static function all(): array
+    public static function all(): Collection
     {
         $files = File::files(resource_path("posts"));
-        $posts = [];
-        foreach ($files as $file){
+
+        return collect($files)
+            ->map(function ($file){
+            $document = YamlFrontMatter::parseFile($file);
+            return new Post(
+                $document->title,
+                $document->body(),
+                $document->excerpt,
+                $document->date,
+                $document->slug
+            );
+        });
+        // $posts = [];
+        /*
+         * foreach ($files as $file) {
             $document = YamlFrontMatter::parseFile($file);
             $posts[] = new Post(
                 $document->title,
@@ -62,14 +76,15 @@ class Post
                 $document->slug
             );
         }
+        */
         return $posts;
 
-       /*$posts =  array_map()*/
-       /* $posts = File::files(resource_path("posts"));
-        $models = array_map(function ($post) {
-            return $post->getContents();
-            //return file_get_contents($post);
-        }, $posts);
-        return $models;*/
+        /*$posts =  array_map()*/
+        /* $posts = File::files(resource_path("posts"));
+         $models = array_map(function ($post) {
+             return $post->getContents();
+             //return file_get_contents($post);
+         }, $posts);
+         return $models;*/
     }
 }
