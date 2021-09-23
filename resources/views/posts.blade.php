@@ -10,11 +10,11 @@
 </head>
 <body>
 <h1>Hello world</h1>
-<?php foreach($posts as $post):?>
+@foreach($posts as $post)
 <article>
-    <h1><a href="/posts/<?= $post->slug;?>"><?= $post->title;?></a></h1>
-    <p>Published on : <?= $post->date;?></p>
-    <p><?= $post->excerpt;?></p>
+    <h1><a href="/posts/{{ $post->slug }}">{{ $post->title }}</a></h1>
+    <p>Published on : {{ $post->date }}</p>
+    <p>{{ $post->excerpt }}</p>
 </article>
-<?php endforeach;?>
+@endforeach
 </body>
