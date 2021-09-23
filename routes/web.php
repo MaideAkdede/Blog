@@ -20,16 +20,9 @@ Route::get('/posts', function () {
     return view('posts');
 });
 
-Route::get('/test', function () {
-    $posts = File::files(resource_path("posts"));
-
-    $document = YamlFrontMatter::parseFile(resource_path('posts/my-first-post.html'));
-    ddd($document->matter('title'));
-
-});
-
 Route::get('/', function () {
     $posts = Post::all();
+
     return view('posts', [
         'posts'=>$posts
     ]);

@@ -12,7 +12,9 @@
 <h1>Hello world</h1>
 <?php foreach($posts as $post):?>
 <article>
-    <p><?= $post;?></p>
+    <h1><a href="<?= $post->slug;?>"><?= $post->title;?></a></h1>
+    <p>Published on : <?= $post->date;?></p>
+    <p><?= $post->excerpt;?></p>
 </article>
 <?php endforeach;?>
 </body>
