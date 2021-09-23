@@ -2,7 +2,8 @@
 <title>My Blog</title>
 
 <body>
-<h1>Hello world</h1>
-<?= $post; ?>
+<h1><?= $post->title; ?></h1>
+<p>Published on: <?= $post->date; ?></p>
+<p><?= $post->body; ?></p>
 <a href="/">Go Back</a>
 </body>
