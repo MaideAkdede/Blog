@@ -23,11 +23,13 @@ Route::get('/posts', function () {
 Route::get('/', function () {
     $posts = Post::all();
     return view('posts', [
-        'posts' => $posts
+        'posts' => $posts,
+        'page_title' => 'La liste des posts'
     ]);
 });
 
 Route::get('/posts/{post}', function ($slug) {
     $post = Post::find($slug);
-    return view('post', compact('post'));
+    $page_title = "Le post : {$post->title}";
+    return view('post', compact('post', 'page_title'));
 })->where('post', '[A-z0-9_\-]+');
