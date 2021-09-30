@@ -28,6 +28,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int $category_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereCategoryId($value)
  */
 class Post extends Model
 {
@@ -35,4 +37,9 @@ class Post extends Model
     protected $dates = [
       'published_at'
     ];
+    protected $guarded = [];
+    /*protected $fillable = ['title', 'body', 'slug', 'excerpt', 'published_at', 'category_id'];*/
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
 }

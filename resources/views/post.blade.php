@@ -1,8 +1,9 @@
 <x-layout>
     <x-slot name="mainContent">
         <h1>{{ $post->title }}</h1>
+        <p><a href="">{{ $post->category->name }}</a></p>
         <p>Published on : <time datetime="{{ $post->published_at }}">{{ $post->published_at->diffForHumans()}}</time></p>
-        {!! $post->body !!}
+        <p>{!! $post->body !!}</p>
         <a href="/">Go Back</a>
     </x-slot>
     <x-slot name="mainTitle">
