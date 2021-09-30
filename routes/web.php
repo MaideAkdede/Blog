@@ -29,7 +29,20 @@ Route::get('/', function () {
 });
 
 Route::get('/posts/{post}', function ($slug) {
-    $post = Post::find($slug);
+    $post = Post::findOrFail($slug);
     $page_title = "Le post : {$post->title}";
     return view('post', compact('post', 'page_title'));
-})->where('post', '[A-z0-9_\-]+');
+});
+
+Route::get('/n', function () {
+    $user = new \App\Models\User();
+    $user->name = 'Maide';
+    $user->email = 'maide.akdede@student.hepl.be';
+    $user->password = \Illuminate\Support\Facades\Hash::make('maide');
+
+    $user->save();
+
+    $user->email = 'maide.akdede@student.hepl.be';
+    $user->save();
+    return \App\Models\User::findOrFail(1);
+});

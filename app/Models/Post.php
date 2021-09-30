@@ -41,13 +41,23 @@ class Post
     public static function find($slug)
     {
         $posts = static::all();
+
         return $posts->firstWhere('slug', $slug);
-        //ddd();
     }
+
+    public static function findOrFail($slug)
+    {
+        $post = static::find($slug);
+        if (!$post) {
+            throw new ModelNotFoundException();
+        }
+        return $post;
+    }
+
 
     public static function all(): Collection
     {
-        return cache()->rememberForever('posts.all', function (){
+        return cache()->rememberForever('posts.all', function () {
 
             $files = File::files(resource_path("posts"));
             return collect($files)
