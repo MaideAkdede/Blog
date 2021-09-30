@@ -28,8 +28,10 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/posts/{post}', function ($slug) {
-    $post = Post::findOrFail($slug);
+Route::get('/posts/{post:slug}', function (Post $post) {
+
+    //$post = Post::where('slug', $slug)->firstOrFail();
+
     $page_title = "Le post : {$post->title}";
     return view('post', compact('post', 'page_title'));
 });

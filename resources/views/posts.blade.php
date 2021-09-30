@@ -4,7 +4,7 @@
         @foreach ($posts as $post)
             <article>
                 <h2><a href="/posts/{{ $post->slug }}">{{ $post->title }}</a></h2>
-                <p>Published on : {{ $post->date }}</p>
+                <p>Published on : <time datetime="{{ $post->published_at }}">{{ $post->published_at->diffForHumans()}}</time></p>
                 <p>{{ $post->excerpt }}</p>
             </article>
         @endforeach

@@ -1,97 +1,38 @@
 <?php
 
-
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Collection;
-use Spatie\YamlFrontMatter\YamlFrontMatter;
-
-class Post
+/**
+ * App\Models\Post
+ *
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property string $body
+ * @property string $excerpt
+ * @property \Illuminate\Support\Carbon $published_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Post newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Post newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Post query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereBody($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereExcerpt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post wherePublishedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
+class Post extends Model
 {
-    public $title;
-
-    public $body;
-
-    public $excerpt;
-
-    public $date;
-
-    public $slug;
-
-    /**
-     * Post constructor.
-     * @param $title
-     * @param $body
-     * @param $excerpt
-     * @param $date
-     * @param $slug
-     */
-    public function __construct($title, $body, $excerpt, $date, $slug)
-    {
-        $this->title = $title;
-        $this->body = $body;
-        $this->excerpt = $excerpt;
-        $this->date = $date;
-        $this->slug = $slug;
-    }
-
-    public static function find($slug)
-    {
-        $posts = static::all();
-
-        return $posts->firstWhere('slug', $slug);
-    }
-
-    public static function findOrFail($slug)
-    {
-        $post = static::find($slug);
-        if (!$post) {
-            throw new ModelNotFoundException();
-        }
-        return $post;
-    }
-
-
-    public static function all(): Collection
-    {
-        return cache()->rememberForever('posts.all', function () {
-
-            $files = File::files(resource_path("posts"));
-            return collect($files)
-                ->map(function ($file) {
-                    $document = YamlFrontMatter::parseFile($file);
-
-                    return new Post(
-                        $document->title,
-                        $document->body(),
-                        $document->excerpt,
-                        $document->date,
-                        $document->slug
-                    );
-                })
-                ->sortBy('date');
-        });
-        /*
-         * foreach ($files as $file) {
-            $document = YamlFrontMatter::parseFile($file);
-            $posts[] = new Post(
-                $document->title,
-                $document->body(),
-                $document->excerpt,
-                $document->date,
-                $document->slug
-            );
-        }
-        */
-        /*$posts =  array_map()*/
-        /* $posts = File::files(resource_path("posts"));
-         $models = array_map(function ($post) {
-             return $post->getContents();
-             //return file_get_contents($post);
-         }, $posts);
-         return $models;*/
-    }
+    use HasFactory;
+    protected $dates = [
+      'published_at'
+    ];
 }
