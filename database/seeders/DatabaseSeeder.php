@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,18 +16,32 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        Category::create([
+        $maide = User::create([
+            'name'=>'Maide Akdede',
+            'slug'=>'maide-akdede',
+            'email'=>'maide.akdede@student.hepl.be',
+            'password'=>bcrypt('Maide'),
+        ]);
+        $emma = User::create([
+            'name'=>'Emmanuelle Vo',
+            'slug'=>'emmanuelle-vo',
+            'email'=>'emmanuelle.vo@student.hepl.be',
+            'password'=>bcrypt('Emma'),
+        ]);
+
+        $user = User::factory(5)->create();
+
+        $family = Category::create([
             'name'=>'Family',
-            'slug'=>'family'
+            'slug'=>'family',
         ]);
-        Category::create([
+        $work = Category::create([
             'name'=>'Work',
-            'slug'=>'work'
+            'slug'=>'work',
         ]);
-        Category::create([
+        $hobby = Category::create([
             'name'=>'Hobby',
-            'slug'=>'hobby'
+            'slug'=>'hobby',
         ]);
 
         Post::create([
@@ -34,7 +49,8 @@ class DatabaseSeeder extends Seeder
             'body'=>'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             'published_at'=>now()->subDays(12),
             'slug'=>'post-1',
-            'category_id'=> Category::where('slug', 'family')->first()->id,
+            'category_id'=> $family->id,
+            'user_id'=> $maide->id,
             'excerpt'=>'Lorem ipsum 1',
         ]);
         Post::create([
@@ -42,24 +58,27 @@ class DatabaseSeeder extends Seeder
             'body'=>'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             'published_at'=>now()->subDays(10),
             'slug'=>'post-2',
-            'category_id'=> Category::where('slug', 'work')->first()->id,
-            'excerpt'=>'Lorem ipsum 2'
+            'category_id'=> $work->id,
+            'user_id'=> $maide->id,
+            'excerpt'=>'Lorem ipsum 2',
         ]);
         Post::create([
             'title'=>'Mon post 3',
             'body'=>'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             'published_at'=>now()->subDays(8),
             'slug'=>'post-3',
-            'category_id'=> Category::where('slug', 'hobby')->first()->id,
-            'excerpt'=>'Lorem ipsum 3'
+            'category_id'=> $family->id,
+            'user_id'=> $emma->id,
+            'excerpt'=>'Lorem ipsum 3',
         ]);
         Post::create([
             'title'=>'Mon post 4',
             'body'=>'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             'published_at'=>now()->subDays(5),
             'slug'=>'post-4',
-            'category_id'=> Category::where('slug', 'family')->first()->id,
-            'excerpt'=>'Lorem ipsum 4'
+            'category_id'=> $family->id,
+            'user_id'=> $maide->id,
+            'excerpt'=>'Lorem ipsum 4',
         ]);
     }
 }
