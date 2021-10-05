@@ -24,7 +24,7 @@ class CategoryFactory extends Factory
         $word = $this->faker->word;
         return [
             'name' => $word,
-            'slug' => $word,
+            'slug' => strtolower($word),
         ];
     }
 }

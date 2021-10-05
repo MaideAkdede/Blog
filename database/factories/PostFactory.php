@@ -23,11 +23,12 @@ class PostFactory extends Factory
      */
     public function definition()
     {
+        $title = $this->faker->sentence;
         return [
             'user_id'=> User::Factory(),
             'category_id'=> Category::Factory(),
-            'title' => $this->faker->sentence,
-            'slug' => str_replace(' ', '-', $this->faker->sentence),
+            'title' => $title,
+            'slug' => strtolower(str_replace([' ', '.'], ['-', ''], $title)),
             'excerpt' => $this->faker->sentence,
             'body' => $this->faker->paragraph,
         ];
