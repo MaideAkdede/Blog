@@ -16,7 +16,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $maide = User::create([
+        //$user = User::factory()->create(['name'=>'John Doe', 'slug'=>'john-doe']);
+        //$user = User::factory()->create(['name'=>'Jane Doe', 'slug'=>'jane-doe']);
+        //
+        //$category = Category::factory()->create(['name'=>'Family', 'slug'=>'family']);
+        //$category = Category::factory()->create(['name'=>'Work', 'slug'=>'work']);
+//        $category = Category::factory()->create(['name'=>'Hobby', 'slug'=>'hobby']);
+        //
+
+        $user = User::factory()->create(['name' => 'John Doe', 'slug' => 'john-doe']);
+        $user = User::factory()->create(['name' => 'Jane Doe', 'slug' => 'jane-doe']);
+
+        $categories = Category::factory(3)->create();
+
+        Post::factory(6)->create(
+            (function () use ($categories) {
+                return [
+                    'user_id' => rand(1,2),
+                    'category_id' => $categories->random()->id
+                ];
+            })
+        );
+
+        /*$maide = User::create([
             'name'=>'Maide Akdede',
             'slug'=>'maide-akdede',
             'email'=>'maide.akdede@student.hepl.be',
@@ -79,6 +101,6 @@ class DatabaseSeeder extends Seeder
             'category_id'=> $family->id,
             'user_id'=> $maide->id,
             'excerpt'=>'Lorem ipsum 4',
-        ]);
+        ]);*/
     }
 }
