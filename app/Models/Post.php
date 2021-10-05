@@ -30,6 +30,11 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property int $category_id
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereCategoryId($value)
+ * @property int $user_id
+ * @property-read \App\Models\Category $category
+ * @property-read \App\Models\User $user
+ * @method static \Database\Factories\PostFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereUserId($value)
  */
 class Post extends Model
 {
@@ -41,5 +46,9 @@ class Post extends Model
     /*protected $fillable = ['title', 'body', 'slug', 'excerpt', 'published_at', 'category_id'];*/
     public function category(){
         return $this->belongsTo(Category::class);
+    }
+    public function user(){
+        // return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }

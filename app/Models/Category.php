@@ -22,9 +22,18 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Post[] $posts
+ * @property-read int|null $posts_count
+ * @method static \Database\Factories\CategoryFactory factory(...$parameters)
  */
 class Category extends Model
 {
-    protected $guarded = [];
     use HasFactory;
+    protected $guarded = [];
+    //Récupérer des posts qui appartiennent à des catégories
+    // retourne pour une catégorie des posts
+    // as Many retourne une collection de Model
+    public function posts(){
+        return $this->hasMany(Post::class);
+    }
 }
