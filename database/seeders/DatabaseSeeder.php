@@ -24,19 +24,30 @@ class DatabaseSeeder extends Seeder
 //        $category = Category::factory()->create(['name'=>'Hobby', 'slug'=>'hobby']);
         //
 
-        $user = User::factory()->create(['name' => 'John Doe', 'slug' => 'john-doe']);
-        $user = User::factory()->create(['name' => 'Jane Doe', 'slug' => 'jane-doe']);
-
-        $categories = Category::factory(3)->create();
-
-        Post::factory(6)->create(
-            (function () use ($categories) {
-                return [
-                    'user_id' => rand(1,2),
-                    'category_id' => $categories->random()->id
-                ];
-            })
-        );
+        User::factory()->create(['name' => 'John Doe', 'slug' => 'john-doe']);
+        User::factory()->create(['name' => 'Jane Doe', 'slug' => 'jane-doe']);
+        //
+        Category::factory()->create(['name' => 'Family', 'slug' => 'family']);
+        Category::factory()->create(['name' => 'Work', 'slug' => 'work']);
+        Category::factory()->create(['name' => 'Hobby', 'slug' => 'hobby']);
+        //
+        $newCategory = Category::factory()->create();
+        $newUser = User::factory()->create();
+        //
+        $newPost = Post::factory(100)->create(
+            (function () use ($newCategory, $newUser) {
+                if (rand(1, 100) > 98) {
+                    return [
+                        'user_id' => $newUser,
+                        'category_id' => $newCategory,
+                    ];
+                } else {
+                    return [
+                        'user_id' => rand(1, 2),
+                        'category_id' => rand(1, 3),
+                    ];
+                }
+            }));
 
         /*$maide = User::create([
             'name'=>'Maide Akdede',
