@@ -23,7 +23,7 @@ class CategoryFactory extends Factory
     {
         $word = $this->faker->word;
         return [
-            'name' => $word,
+            'name' => ucfirst($word),
             'slug' => strtolower($word),
         ];
     }
