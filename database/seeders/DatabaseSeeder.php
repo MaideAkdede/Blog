@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
         $newCategory = Category::factory()->create();
         $newUser = User::factory()->create();
         //
-        $newPost = Post::factory(100)->create(
+        Post::factory(100)->create(
             (function () use ($newCategory, $newUser) {
                 if (rand(1, 100) > 98) {
                     return [
