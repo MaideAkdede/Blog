@@ -1,6 +1,16 @@
 <x-layout>
     <x-slot name="mainContent">
-        <h1>Hello world</h1>
+
+        @include('_posts-header')
+
+        <main class="max-w-6xl mx-auto mt-6 lg:mt-20 space-y-6">
+            @if($posts->count())
+                <x-posts-grid :posts="$posts" />
+            @else
+                <p>No posts yet</p>
+            @endif
+        </main>
+        {{--<h1>Hello world</h1>
         @foreach ($posts as $post)
             <article>
                 <h2><a href="/posts/{{ $post->slug }}">{{ $post->title }}</a></h2>
@@ -12,7 +22,7 @@
                 <p><a href="categories/{{ $post->category->slug }}">{{ $post->category->name }}</a></p>
                 <p>{{ $post->excerpt }}</p>
             </article>
-        @endforeach
+        @endforeach--}}
     </x-slot>
     <x-slot name="mainTitle">
         {{ $page_title }}
