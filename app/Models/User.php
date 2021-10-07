@@ -75,7 +75,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
+    // fonction peut etre ut. comme propriété représ. realation : méthode utilisé comme
     public function posts(){
         return $this->hasMany(Post::class);
     }

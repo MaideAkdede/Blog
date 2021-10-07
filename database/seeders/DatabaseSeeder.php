@@ -23,20 +23,18 @@ class DatabaseSeeder extends Seeder
         Category::factory()->create(['name' => 'Work', 'slug' => 'work']);
         Category::factory()->create(['name' => 'Hobby', 'slug' => 'hobby']);
         //
-        $newCategory = Category::factory()->create();
-        $newUser = User::factory()->create();
-        //
-        Post::factory(100)->create(
-            (function () use ($newCategory, $newUser) {
-                if (rand(1, 100) > 98) {
-                    return [
-                        'user_id' => $newUser,
-                        'category_id' => $newCategory];
-                } else {
-                    return [
-                        'category_id' => rand(1, 3),
-                        'user_id' => rand(1, 2)];
-                }
-            }));
+        Post::factory(100)->create();
+
+       /* (function () use ($newCategory, $newUser) {
+            if (rand(1, 100) > 98) {
+                return [
+                    'user_id' => $newUser,
+                    'category_id' => $newCategory];
+            } else {
+                return [
+                    'category_id' => rand(1, 3),
+                    'user_id' => rand(1, 2)];
+            }
+        })*/
     }
 }

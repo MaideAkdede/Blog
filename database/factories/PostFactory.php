@@ -20,17 +20,37 @@ class PostFactory extends Factory
      * Define the model's default state.
      *
      * @return array
+     * @throws \Exception
      */
     public function definition()
     {
         $title = $this->faker->sentence;
+        //
+        $r = random_int(0, 100);
+        $user = $r == 100 ?
+            User::factory() :
+            ($r >= 88 ?
+                User::firstWhere('id', 1) :
+                User::firstWhere('id', 2)
+            );
+        //
+        $r = random_int(0, 100);
+        $availableCategories = Category::where('slug', 'family')
+            ->orWhere('slug', 'work')
+            ->orWhere('slug', 'hobby');
+
+        $category = $r == 100 ?
+            Category::factory() :
+            rand(1, 3);
+
         return [
-            'user_id'=> User::Factory(),
-            'category_id'=> Category::Factory(),
+            'user_id' => $user,
+            'category_id' => $category,
             'title' => $title,
             'slug' => strtolower(str_replace([' ', '.'], ['-', ''], $title)),
             'excerpt' => $this->faker->sentence,
-            'body' => $this->faker->paragraph,
+            'published_at' => $this->faker->dateTimeThisYear,
+            'body' => $this->faker->paragraphs(3, true),
         ];
     }
 }
