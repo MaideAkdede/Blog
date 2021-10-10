@@ -28,6 +28,7 @@ Route::get('/', function () {
     return view('posts', [
         'posts' => $posts,
         'categories' => Category::whereHas('posts')->orderBy('name')->get(),
+        'users' => User::whereHas('posts')->orderBy('name')->get(),
         'page_title' => 'La liste des posts'
     ]);
 });
