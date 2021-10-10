@@ -17,7 +17,7 @@
 
             <div x-data="{ show: false}" @click.away="show=false">
                 <button @click="show=!show"
-                        class="py-2 pl-3 pr-9 text-sm font-semibold w-full lg:w-32 text-left flex z-50 lg:inline-flex">
+                        class="py-2 pl-3 pr-9 text-sm font-semibold w-full lg:w-32 text-left flex lg:inline-flex">
 
                     Categories
 
@@ -31,7 +31,7 @@
                         </g>
                     </svg>
                 </button>
-                <div x-show="show" class="py-2 absolute bg-gray-100 rounded-xl w-full" style="display: none">
+                <div x-show="show" class="py-2 absolute bg-gray-100 rounded-xl w-full z-50" style="display: none">
                     @foreach($categories as $category)
                         <a href="#" class="block text-left px-3 text-sm leading-7 hover:bg-blue-500 focus:bg-blue-500 mt-2 hover:text-white focus:text-white">{{ $category->name }}</a>
                     @endforeach
