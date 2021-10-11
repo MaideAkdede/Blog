@@ -25,7 +25,15 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 Route::get('/posts', function () {
     return view('posts');
 });
-
+/*
+ * Lien ALLvoir tout les posts
+ * remplacer intituler de la class courante
+- garder trace categorie courante
+-afficher cat
+- bouton liste toute catégorie
+// ALL pots dans les options
+afficher que l'item est selct
+*/
 Route::get('/', function () {
     // Home Page
     $posts = Post::latest('published_at')->with('category', 'user')->get();
@@ -65,8 +73,9 @@ Route::get('/categories/{category:slug}', function (Category $category) {
     $posts = $category->posts;
     $posts->load('category', 'user');
     $page_title = "Category : {$category->name}";
-
-    return view('posts', compact('categories', 'users', 'posts', 'category', 'page_title'));
+    //
+    $currentCategory = $category;
+    return view('posts', compact('categories', 'users', 'posts', 'category', 'currentCategory', 'page_title'));
 });
 
 Route::get('/users/', function () {
