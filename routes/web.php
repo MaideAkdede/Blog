@@ -17,18 +17,27 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
+3 routes affiches la listes d'articles
+- users, posts, categories
+- changer titre en fonction de ce qui sera afficher
+*/
 Route::get('/posts', function () {
     return view('posts');
 });
 
 Route::get('/', function () {
-    //$posts = Post::all();
+    // Home Page
     $posts = Post::latest('published_at')->with('category', 'user')->get();
+    // Variables
+    // $categories = all();
+    $categories = Category::whereHas('posts')->orderBy('name')->get();
+    $users = User::whereHas('posts')->orderBy('name')->get();
+    //
     return view('posts', [
         'posts' => $posts,
-        'categories' => Category::whereHas('posts')->orderBy('name')->get(),
-        'users' => User::whereHas('posts')->orderBy('name')->get(),
+        'categories' => $categories,
+        'users' => $users,
         'page_title' => 'La liste des posts'
     ]);
 });
@@ -50,8 +59,14 @@ Route::get('/categories/', function () {
 });
 
 Route::get('/categories/{category:slug}', function (Category $category) {
+    $categories = Category::whereHas('posts')->orderBy('name')->get();
+    $users = User::whereHas('posts')->orderBy('name')->get();
+    //
+    $posts = $category->posts;
+    $posts->load('category', 'user');
     $page_title = "Category : {$category->name}";
-    return view('category', compact('category', 'page_title'));
+
+    return view('posts', compact('categories', 'users', 'posts', 'category', 'page_title'));
 });
 
 Route::get('/users/', function () {
@@ -64,8 +79,13 @@ Route::get('/users/', function () {
 });
 
 Route::get('/users/{user:slug}', function (User $user) {
+    $categories = Category::whereHas('posts')->orderBy('name')->get();
+    $users = User::whereHas('posts')->orderBy('name')->get();
+    //
+    $posts = $user->posts;
     $user->load('posts.category');
+    $posts->load('user');
     $page_title = "User : {$user->name}";
 
-    return view('user', compact('user', 'page_title'));
+    return view('posts', compact('categories', 'users', 'posts', 'user', 'page_title'));
 });
