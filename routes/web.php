@@ -48,7 +48,7 @@ Route::get('/', function () {
         'users' => $users,
         'page_title' => 'La liste des posts'
     ]);
-});
+})->name('home');
 
 Route::get('/posts/{post:slug}', function (Post $post) {
 
@@ -76,7 +76,7 @@ Route::get('/categories/{category:slug}', function (Category $category) {
     //
     $currentCategory = $category;
     return view('posts', compact('categories', 'users', 'posts', 'category', 'currentCategory', 'page_title'));
-});
+})->name('single-category');
 
 Route::get('/users/', function () {
     $users = User::all();
