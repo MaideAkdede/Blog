@@ -22,7 +22,7 @@ class CategoryFactory extends Factory
     public function definition()
     {
         //STr::slug
-        $word = $this->faker->word;
+        $word = $this->faker->unique->word;
         return [
             'name' => ucfirst($word),
             'slug' => strtolower($word),

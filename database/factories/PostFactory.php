@@ -39,7 +39,7 @@ class PostFactory extends Factory
             ->orWhere('slug', 'work')
             ->orWhere('slug', 'hobby');
 
-        $category = $r == 100 ?
+        $category = $r > 50 ?
             Category::factory() :
             rand(1, 3);
 
@@ -48,9 +48,9 @@ class PostFactory extends Factory
             'category_id' => $category,
             'title' => $title,
             'slug' => strtolower(str_replace([' ', '.'], ['-', ''], $title)),
-            'excerpt' => $this->faker->sentence,
+            'excerpt' => '<p>'. implode('</p><p>', $this->faker->paragraphs(2)) . '</p>',
             'published_at' => $this->faker->dateTimeThisYear,
-            'body' => $this->faker->paragraphs(3, true),
+            'body' => '<p>'. implode('</p><p>', $this->faker->paragraphs(6)) . '</p>',
         ];
     }
 }
