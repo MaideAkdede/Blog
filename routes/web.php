@@ -36,16 +36,21 @@ afficher que l'item est selct
 */
 Route::get('/', function () {
     // Home Page
-    $posts = Post::latest('published_at')->with('category', 'user')->get();
-    // Variables
-    // $categories = all();
-    $categories = Category::whereHas('posts')->orderBy('name')->get();
-    $users = User::whereHas('posts')->orderBy('name')->get();
+    $posts = Post::latest('published_at')->with('category', 'user');
+    $categories = Category::whereHas('posts')->orderBy('name');
+    $users = User::whereHas('posts')->orderBy('name');
+    //
+    if (request('search')) {
+        $posts
+            ->where('title', 'like', '%' . request('search') . '%')
+            ->orWhere('excerpt', 'like', '%' . request('search') . '%')
+            ->orWhere('body', 'like', '%' . request('search') . '%');
+    }
     //
     return view('posts', [
-        'posts' => $posts,
-        'categories' => $categories,
-        'users' => $users,
+        'posts' => $posts->get(),
+        'categories' => $categories->get(),
+        'users' => $users->get(),
         'page_title' => 'La liste des posts'
     ]);
 })->name('home');
