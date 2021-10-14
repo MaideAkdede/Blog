@@ -18,7 +18,7 @@ class PostController extends Controller
             'posts' => Post::filter($filters)
                 ->latest('published_at')
                 ->with('category', 'user')
-                ->paginate(6),
+                ->simplePaginate(6),
             'users' => $users->get(),
             'page_title' => 'La liste des posts',
         ]);
