@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
@@ -25,42 +26,10 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 Route::get('/posts', function () {
     return view('posts');
 });
-/*
- * Lien ALLvoir tout les posts
- * remplacer intituler de la class courante
-- garder trace categorie courante
--afficher cat
-- bouton liste toute catégorie
-// ALL pots dans les options
-afficher que l'item est selct
-*/
-Route::get('/', function () {
-    // Home Page
-    $posts = Post::latest('published_at')->with('category', 'user');
-    $categories = Category::whereHas('posts')->orderBy('name');
-    $users = User::whereHas('posts')->orderBy('name');
-    //
-    if (request('search')) {
-        $posts
-            ->where('title', 'like', '%' . request('search') . '%')
-            ->orWhere('excerpt', 'like', '%' . request('search') . '%')
-            ->orWhere('body', 'like', '%' . request('search') . '%');
-    }
-    //
-    return view('posts', [
-        'posts' => $posts->get(),
-        'categories' => $categories->get(),
-        'users' => $users->get(),
-        'page_title' => 'La liste des posts'
-    ]);
-})->name('home');
 
-Route::get('/posts/{post:slug}', function (Post $post) {
+Route::get('/', [PostController::class, 'index'])->name('home');
 
-    //$post = Post::where('slug', $slug)->firstOrFail();
-    $page_title = "Le post : {$post->title}";
-    return view('post', compact('post', 'page_title'));
-});
+Route::get('/posts/{post:slug}', [PostController::class, 'show']);
 
 Route::get('/categories/', function () {
     $categories = Category::all();
@@ -68,6 +37,14 @@ Route::get('/categories/', function () {
     return view('categories', [
         'categories' => $categories,
         'page_title' => 'All categories'
+    ]);
+});
+Route::get('/users/', function () {
+    $users = User::all();
+
+    return view('/users', [
+        'users' => $users,
+        'page_title' => 'All Users'
     ]);
 });
 
@@ -82,16 +59,6 @@ Route::get('/categories/{category:slug}', function (Category $category) {
     $currentCategory = $category;
     return view('posts', compact('categories', 'users', 'posts', 'category', 'currentCategory', 'page_title'));
 })->name('single-category');
-
-Route::get('/users/', function () {
-    $users = User::all();
-
-    return view('/users', [
-        'users' => $users,
-        'page_title' => 'All Users'
-    ]);
-});
-
 Route::get('/users/{user:slug}', function (User $user) {
     $categories = Category::whereHas('posts')->orderBy('name')->get();
     $users = User::whereHas('posts')->orderBy('name')->get();
