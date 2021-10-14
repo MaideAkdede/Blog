@@ -19,44 +19,11 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 |
 */
 
-Route::get('/posts', function () {
-    return view('posts');
-});
-
 Route::get('/', [PostController::class, 'index'])->name('home');
 
 Route::get('/posts/{post:slug}', [PostController::class, 'show']);
 
-Route::get('/categories/', function () {
-    $categories = Category::all();
-
-    return view('categories', [
-        'categories' => $categories,
-        'page_title' => 'All categories'
-    ]);
-});
-Route::get('/users/', function () {
-    $users = User::all();
-
-    return view('/users', [
-        'users' => $users,
-        'page_title' => 'All Users'
-    ]);
-});
-
-Route::get('/categories/{category:slug}', function (Category $category) {
-    $categories = Category::whereHas('posts')->orderBy('name')->get();
-    $users = User::whereHas('posts')->orderBy('name')->get();
-    //
-    $posts = $category->posts;
-    $posts->load('category', 'user');
-    $page_title = "Category : {$category->name}";
-    //
-    $currentCategory = $category;
-    return view('posts', compact('categories', 'users', 'posts', 'category', 'currentCategory', 'page_title'));
-})->name('single-category');
-
-Route::get('/users/{user:slug}', function (User $user) {
+/*Route::get('/users/{user:slug}', function (User $user) {
     $categories = Category::whereHas('posts')->orderBy('name')->get();
     $users = User::whereHas('posts')->orderBy('name')->get();
     //
@@ -65,5 +32,5 @@ Route::get('/users/{user:slug}', function (User $user) {
     $posts->load('user');
     $page_title = "User : {$user->name}";
 
-    return view('posts', compact('categories', 'users', 'posts', 'user', 'page_title'));
-});
+    return view('posts.index', compact('categories', 'users', 'posts', 'user', 'page_title'));
+});*/

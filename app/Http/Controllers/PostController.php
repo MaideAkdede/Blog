@@ -10,10 +10,9 @@ class PostController extends Controller
 {
     public function index()
     {
-        // Home Page
-        //$posts = Post::latest('published_at')->with('category', 'user');
-        $categories = Category::whereHas('posts')->orderBy('name');
+
         $users = User::whereHas('posts')->orderBy('name');
+        $filters = request()->only('search', 'category', 'user');
 
         /* if (request('search')) {
              $posts
@@ -21,11 +20,10 @@ class PostController extends Controller
                  ->orWhere('excerpt', 'like', '%' . request('search') . '%')
                  ->orWhere('body', 'like', '%' . request('search') . '%');
          }*/
-        return view('posts', [
-            'posts' => Post::filter(request(['search']))->latest('published_at')->with('category', 'user')->get(),
-            'categories' => $categories->get(),
+        return view('posts.index', [
+            'posts' => Post::filter($filters)->latest('published_at')->with('category', 'user')->get(),
             'users' => $users->get(),
-            'page_title' => 'La liste des posts'
+            'page_title' => 'La liste des posts',
         ]);
 
     }
@@ -33,6 +31,6 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $page_title = "Le post : {$post->title}";
-        return view('post', compact('post', 'page_title'));
+        return view('posts.show', compact('post', 'page_title'));
     }
 }
