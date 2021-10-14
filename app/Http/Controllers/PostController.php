@@ -14,14 +14,11 @@ class PostController extends Controller
         $users = User::whereHas('posts')->orderBy('name');
         $filters = request()->only('search', 'category', 'user');
 
-        /* if (request('search')) {
-             $posts
-                 ->where('title', 'like', '%' . request('search') . '%')
-                 ->orWhere('excerpt', 'like', '%' . request('search') . '%')
-                 ->orWhere('body', 'like', '%' . request('search') . '%');
-         }*/
         return view('posts.index', [
-            'posts' => Post::filter($filters)->latest('published_at')->with('category', 'user')->get(),
+            'posts' => Post::filter($filters)
+                ->latest('published_at')
+                ->with('category', 'user')
+                ->paginate(6),
             'users' => $users->get(),
             'page_title' => 'La liste des posts',
         ]);
