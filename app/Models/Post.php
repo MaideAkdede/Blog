@@ -35,20 +35,36 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\Models\User $user
  * @method static \Database\Factories\PostFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post filter()
  */
 class Post extends Model
 {
     use HasFactory;
+
     protected $dates = [
-      'published_at'
+        'published_at'
     ];
     protected $guarded = [];
+
     /*protected $fillable = ['title', 'body', 'slug', 'excerpt', 'published_at', 'category_id'];*/
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
-    public function user(){
+
+    public function user()
+    {
         // return $this->belongsTo(User::class, 'user_id');
         return $this->belongsTo(User::class);
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($search = $filters['search'] ?? false, fn() => $query
+            ->where('title', 'like', '%' . $search . '%')
+            ->orWhere('excerpt', 'like', '%' . $search . '%')
+            ->orWhere('body', 'like', '%' . $search . '%')
+        );
+        return $query;
     }
 }
