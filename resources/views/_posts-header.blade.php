@@ -20,7 +20,7 @@
                 {{-- Items - Links --}}
                 <x-slot name="entries">
                     <x-dropdown-item href="/"
-                                     :active="request()->routeIs('home')">
+                                     :active="request()->routeIs('home') && !request('category')">
                         All posts
                     </x-dropdown-item>
                     @foreach($categories as $category)
