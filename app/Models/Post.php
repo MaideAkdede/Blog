@@ -65,6 +65,11 @@ class Post extends Model
             ->orWhere('excerpt', 'like', '%' . $search . '%')
             ->orWhere('body', 'like', '%' . $search . '%')
         );
+        $query->when($search = $filters['category'] ?? false, fn($query, $category)=>$query
+            ->from('categories')
+            ->whereColumn('category_id', 'posts.category_id')
+            ->where('categories.slug', $category)
+        );
         return $query;
     }
 }
