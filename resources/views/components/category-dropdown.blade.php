@@ -8,13 +8,14 @@
     </x-slot>
     {{-- Items - Links --}}
     <x-slot name="entries">
-        <x-dropdown-item href="/"
+        <x-dropdown-item href="/?{{ http_build_query(request()->except('category', 'page')) }}"
                          :active="request()->routeIs('home') && !request('category')">
             All posts
         </x-dropdown-item>
         @foreach($categories as $category)
-            <x-dropdown-item href="?category={{ $category->slug }}&{{ http_build_query(request()->except('category')) }}"
-                             :active="isset($currentCategory) && $currentCategory->is($category)">
+            <x-dropdown-item
+                href="?category={{ $category->slug }}&{{ http_build_query(request()->except('category', 'page')) }}"
+                :active="isset($currentCategory) && $currentCategory->is($category)">
                 {{ $category->name }}
             </x-dropdown-item>
         @endforeach
