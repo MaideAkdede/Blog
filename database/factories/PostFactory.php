@@ -39,7 +39,7 @@ class PostFactory extends Factory
             ->orWhere('slug', 'work')
             ->orWhere('slug', 'hobby');
 
-        $category = $r > 50 ?
+        $category = $r == 100 ?
             Category::factory() :
             rand(1, 3);
 
