@@ -18,11 +18,7 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 | contains the "web" middleware group. Now create something great!
 |
 */
-/*
-3 routes affiches la listes d'articles
-- users, posts, categories
-- changer titre en fonction de ce qui sera afficher
-*/
+
 Route::get('/posts', function () {
     return view('posts');
 });
@@ -59,6 +55,7 @@ Route::get('/categories/{category:slug}', function (Category $category) {
     $currentCategory = $category;
     return view('posts', compact('categories', 'users', 'posts', 'category', 'currentCategory', 'page_title'));
 })->name('single-category');
+
 Route::get('/users/{user:slug}', function (User $user) {
     $categories = Category::whereHas('posts')->orderBy('name')->get();
     $users = User::whereHas('posts')->orderBy('name')->get();
