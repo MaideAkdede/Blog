@@ -23,7 +23,6 @@ class PostController extends Controller
             'users' => $users->get(),
             'page_title' => 'La liste des posts',
         ]);
-
     }
 
     public function show(Post $post)
