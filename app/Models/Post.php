@@ -72,7 +72,7 @@ class Post extends Model
         );
         $query->when($filters['user'] ?? false, fn($query, $user) => $query
             ->whereHas('user', fn($query) => $query
-                ->where('slug', $user))
+                ->where('username', $user))
         );
     }
 }

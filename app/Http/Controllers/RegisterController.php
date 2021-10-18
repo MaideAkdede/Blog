@@ -8,8 +8,16 @@ class RegisterController extends Controller
     {
         return view('register.create');
     }
+
     public function store()
     {
-        dd('j’enregistre un nouvel utilisateur');
+        //Valider nos données validate fournis par l’objet request
+        // arg. de validation
+        request()->validate([
+            'name' => 'required|min:3',
+            'username' => 'required|unique:',
+            'email' => 'required|email|unique:users,email',
+            'password'=> 'required|min:3|max:32',
+        ]);
     }
 }
