@@ -12,7 +12,9 @@
                                type="text"
                                name="name"
                                id="name"
-                               required>
+                               value="{{old('name')}}"
+                        >
+                       <x-error-message field="name" />
                     </div>
                     <div class="mb-6">
                         <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
@@ -22,7 +24,10 @@
                                name="username"
                                placeholder="user-name-example"
                                id="username"
-                               required>
+                               value="{{old('username')}}"
+                        >
+                        <x-error-message field="username" />
+
                     </div>
                     <div class="mb-6">
                         <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
@@ -31,7 +36,10 @@
                                type="email"
                                name="email"
                                id="email"
-                               required>
+                               value="{{old('email')}}"
+                        >
+                        <x-error-message field="email" />
+
                     </div>
                     <div class="mb-6">
                         <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
@@ -40,7 +48,10 @@
                                type="password"
                                name="password"
                                id="password"
-                               required>
+                               value="{{old('password')}}"
+                        >
+                        <x-error-message field="password" />
+
                     </div>
                     <div class="mb-6">
                         <button class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500"
