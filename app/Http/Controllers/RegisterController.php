@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Validation\Rule;
 use PhpParser\Node\Stmt\Return_;
 
 class RegisterController extends Controller
@@ -17,10 +18,10 @@ class RegisterController extends Controller
         //Valider nos données validate fournis par l’objet request
         // arg. de validation
         $validateData = request()->validate([
-            'name' => 'required|min:3',
-            'username' => 'required|unique:users,username',
+            'name' => ['required','min:3', 'max:255'],
+            'username' => ['required', 'min:3', 'max:255', Rule::unique('users', 'username')],
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:3|max:32',
+            'password' => 'required|min:6|max:48',
         ]);
 
         User::create($validateData);
