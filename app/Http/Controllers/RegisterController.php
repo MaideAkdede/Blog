@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use PhpParser\Node\Stmt\Return_;
+
 class RegisterController extends Controller
 {
     public function create()
@@ -13,11 +16,15 @@ class RegisterController extends Controller
     {
         //Valider nos données validate fournis par l’objet request
         // arg. de validation
-        request()->validate([
+        $validateData = request()->validate([
             'name' => 'required|min:3',
-            'username' => 'required|unique:',
+            'username' => 'required|unique:users,username',
             'email' => 'required|email|unique:users,email',
-            'password'=> 'required|min:3|max:32',
+            'password' => 'required|min:3|max:32',
         ]);
+
+        User::create($validateData);
+
+        return 'User Crée';
     }
 }

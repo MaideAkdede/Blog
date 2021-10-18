@@ -50,12 +50,14 @@ class User extends Authenticatable
      *
      * @var string[]
      */
-    protected $fillable = [
-        'name',
-        'slug',
-        'email',
-        'password',
-    ];
+    /* protected $fillable = [
+         'name',
+         'username',
+         'email',
+         'password',
+     ];*/
+    protected $guarded = [];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -75,8 +77,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
     // fonction peut etre ut. comme propriété représ. realation : méthode utilisé comme
-    public function posts(){
+    public function posts()
+    {
         return $this->hasMany(Post::class);
+    }
+
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
     }
 }

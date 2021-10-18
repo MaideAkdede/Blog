@@ -29,7 +29,6 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
-    protected $guarded = [];
     //Récupérer des posts qui appartiennent à des catégories
     // retourne pour une catégorie des posts
     // as Many retourne une collection de Model
