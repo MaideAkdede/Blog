@@ -14,7 +14,7 @@
                                id="name"
                                value="{{old('name')}}"
                         >
-                       <x-error-message field="name" />
+                        <x-error-message field="name"/>
                     </div>
                     <div class="mb-6">
                         <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
@@ -26,7 +26,7 @@
                                id="username"
                                value="{{old('username')}}"
                         >
-                        <x-error-message field="username" />
+                        <x-error-message field="username"/>
 
                     </div>
                     <div class="mb-6">
@@ -38,7 +38,7 @@
                                id="email"
                                value="{{old('email')}}"
                         >
-                        <x-error-message field="email" />
+                        <x-error-message field="email"/>
 
                     </div>
                     <div class="mb-6">
@@ -50,7 +50,7 @@
                                id="password"
                                value="{{old('password')}}"
                         >
-                        <x-error-message field="password" />
+                        <x-error-message field="password"/>
 
                     </div>
                     <div class="mb-6">
