@@ -16,7 +16,8 @@ class RegisterController extends Controller
     }
     public function store(StoreUserRequest $r)
     {
-        User::create($r->validated());
+        $user = User::create($r->validated());
+        auth()->login($user);
         return redirect('/')->with('success', __('messages.account-created'));
     }
 }

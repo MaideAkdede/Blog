@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SessionController;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
@@ -24,8 +25,24 @@ Route::get('/', [PostController::class, 'index'])->name('home');
 
 Route::get('/posts/{post:slug}', [PostController::class, 'show']);
 
-Route::get('/register', [RegisterController::class, 'create']);
-Route::post('/register', [RegisterController::class, 'store']);
+Route::get('/register',
+    [RegisterController::class, 'create'])
+    ->middleware('guest');
+Route::post('/register',
+    [RegisterController::class, 'store'])
+    ->middleware('guest');
+// seul un utilisateur authentifié peut se Log Out
+Route::post('/logout',
+    [SessionController::class, 'destroy'])
+    ->middleware('auth');
+// Afficher formulaire de Login qui n'est accessible que au utilisateur non connecté
+Route::get('/login',
+    [SessionController::class, 'create'])
+    ->middleware('guest');
+//
+Route::post('/sessions',
+    [SessionController::class, 'store'])
+    ->middleware('guest');
 
 /*Route::get('/users/{user:slug}', function (User $user) {
     $categories = Category::whereHas('posts')->orderBy('name')->get();

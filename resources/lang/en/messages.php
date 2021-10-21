@@ -14,5 +14,5 @@ return [
     */
 
     'account-created' => 'Your account has been successfully created',
-
+    'logged_in' => 'Welcome, ' . ucfirst(auth()->user()->username) . ' you are now logged!',
 ];

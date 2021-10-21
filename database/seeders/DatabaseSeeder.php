@@ -18,6 +18,12 @@ class DatabaseSeeder extends Seeder
     {
         User::factory()->create(['name' => 'John Doe', 'username' => 'john-doe']);
         User::factory()->create(['name' => 'Jane Doe', 'username' => 'jane-doe']);
+        User::factory()->create([
+            'name' => 'maide',
+            'username' => 'maide',
+            'email' => 'maide@mail.com',
+            'password' => 'maide'
+        ]);
         //
         Category::factory()->create(['name' => 'Family', 'slug' => 'family']);
         Category::factory()->create(['name' => 'Work', 'slug' => 'work']);
@@ -25,16 +31,16 @@ class DatabaseSeeder extends Seeder
         //
         Post::factory(100)->create();
 
-       /* (function () use ($newCategory, $newUser) {
-            if (rand(1, 100) > 98) {
-                return [
-                    'user_id' => $newUser,
-                    'category_id' => $newCategory];
-            } else {
-                return [
-                    'category_id' => rand(1, 3),
-                    'user_id' => rand(1, 2)];
-            }
-        })*/
+        /* (function () use ($newCategory, $newUser) {
+             if (rand(1, 100) > 98) {
+                 return [
+                     'user_id' => $newUser,
+                     'category_id' => $newCategory];
+             } else {
+                 return [
+                     'category_id' => rand(1, 3),
+                     'user_id' => rand(1, 2)];
+             }
+         })*/
     }
 }

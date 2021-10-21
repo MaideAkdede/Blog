@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="{{ app()->getLocale() }}">
 </head>
 <title>Laravel From Scratch Blog</title>
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
@@ -16,9 +16,17 @@
             </a>
         </div>
 
-        <div class="mt-8 md:mt-0">
-            <a href="/register" class="text-xs font-bold uppercase">Register</a>
-
+        <div class="mt-8 md:mt-0 flex items-center">
+            @guest
+                <a href="/register" class="text-xs font-bold uppercase">Register</a>
+                <a href="/login" class="text-xs font-bold uppercase ml-4">Login</a>
+            @else
+                <span class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->username }}!</span>
+                <form method="POST" action="/logout">
+                    @csrf
+                    <button type="submit" class="text-xs uppercase semi-bold text-blue-500 m-6">Logout</button>
+                </form>
+            @endguest
             <a href="#" class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
                 Subscribe for Updates
             </a>
