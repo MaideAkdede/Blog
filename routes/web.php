@@ -43,6 +43,10 @@ Route::get('/login',
 Route::post('/sessions',
     [SessionController::class, 'store'])
     ->middleware('guest');
+// Comments
+Route::post('/posts/{post}/comments',
+    [\App\Http\Controllers\PostCommentController::class, 'store'])
+    ->middleware('auth');
 
 /*Route::get('/users/{user:slug}', function (User $user) {
     $categories = Category::whereHas('posts')->orderBy('name')->get();

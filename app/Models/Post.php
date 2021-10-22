@@ -74,4 +74,8 @@ class Post extends Model
                 ->where('username', $user))
         );
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

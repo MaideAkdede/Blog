@@ -29,10 +29,17 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+
     //Récupérer des posts qui appartiennent à des catégories
     // retourne pour une catégorie des posts
     // as Many retourne une collection de Model
-    public function posts(){
+    public function posts()
+    {
         return $this->hasMany(Post::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasManyThrough(Comment::class, Post::class);
     }
 }
