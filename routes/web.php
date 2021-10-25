@@ -1,13 +1,16 @@
 <?php
 
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionController;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use App\Services\Newsletter;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use MailchimpMarketing\ApiClient;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 /*
@@ -47,15 +50,20 @@ Route::post('/sessions',
 Route::post('/posts/{post}/comments',
     [\App\Http\Controllers\PostCommentController::class, 'store'])
     ->middleware('auth');
+//Mailchimp
+Route::get('/mc', function () {
+    $mailchimp = new ApiClient();
 
-/*Route::get('/users/{user:slug}', function (User $user) {
-    $categories = Category::whereHas('posts')->orderBy('name')->get();
-    $users = User::whereHas('posts')->orderBy('name')->get();
-    //
-    $posts = $user->posts;
-    $user->load('posts.category');
-    $posts->load('user');
-    $page_title = "User : {$user->name}";
+    $mailchimp->setConfig([
+        'apiKey' => config('services.mailchimp.key'),
+        'server' => config('services.mailchimp.server-prefix'),
+    ]);
 
-    return view('posts.index', compact('categories', 'users', 'posts', 'user', 'page_title'));
-});*/
+    $response = $mailchimp->lists->addListMember('80f765bb88', [
+        "email_address" => "maide.akdede@student.hepl.be",
+        "status" => "subscribed",
+    ]);
+    ddd($response);
+});
+// Mailchimp Newsletter Post Add
+Route::post('/newsletter', NewsletterController::class);
