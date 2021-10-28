@@ -67,5 +67,7 @@ Route::get('/mc', function () {
 });
 // Mailchimp Newsletter Post Add
 Route::post('/newsletter', NewsletterController::class);
-//
-Route::get('/admin/posts/create', [PostController::class, 'create']);
+// Get the Form to add a Post
+Route::get('/admin/posts/create', [PostController::class, 'create'])->middleware('admins');
+// Post datas into db
+Route::post('/admin/posts', [PostController::class, 'store'])->middleware('admins');
