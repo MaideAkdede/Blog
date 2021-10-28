@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use http\Client\Response;
 
 class PostController extends Controller
 {
@@ -29,5 +30,16 @@ class PostController extends Controller
     {
         $page_title = "Le post : {$post->title}";
         return view('posts.show', compact('post', 'page_title'));
+    }
+
+    public function create()
+    {
+        if (auth()->guest()){
+            abort(\Illuminate\Http\Response::HTTP_FORBIDDEN);
+        }
+        if (auth()->user() != ''){
+            abort(\Illuminate\Http\Response::HTTP_FORBIDDEN);
+        }
+        return view('/posts.create');
     }
 }

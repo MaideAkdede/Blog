@@ -7,7 +7,7 @@ use App\Http\Controllers\SessionController;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
-use App\Services\Newsletter;
+use App\Services\MailchimpNewsletter;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use MailchimpMarketing\ApiClient;
@@ -67,3 +67,5 @@ Route::get('/mc', function () {
 });
 // Mailchimp Newsletter Post Add
 Route::post('/newsletter', NewsletterController::class);
+//
+Route::get('/admin/posts/create', [PostController::class, 'create']);
