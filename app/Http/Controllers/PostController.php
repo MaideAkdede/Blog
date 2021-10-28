@@ -45,15 +45,20 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'excerpt' => 'required',
             'body' => 'required',
+            'slug' => 'required',
+            'thumbnail', 'image',
             'category_id' => 'required', Rule::exists('categories', 'id'),
         ]);
 
+        $attributes['thumbnail_path'] = request()->file('thumbnail')?->store('thumbnails');
+
+        unset($attributes['thumbnail']);
+
         $attributes['user_id'] = auth()->id();
-        $attributes['slug'] = Str::slug($attributes['title']);
+        //$attributes['slug'] = Str::slug($attributes['title']);
         $attributes['published_at'] = now('Europe/Brussels');
 
         $post = Post::create($attributes);
-
         return redirect('/posts/' . $post->slug)->with('success', 'Your post has been created and is now published');
     }
 }

@@ -6,6 +6,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="{{asset('/js/app.js')}}"></script>
     <style>
         html {
             scroll-behavior: smooth;
@@ -26,7 +27,28 @@
                 <a href="/register" class="text-xs font-bold uppercase">Register</a>
                 <a href="/login" class="text-xs font-bold uppercase ml-4">Login</a>
             @else
-                <span class="text-xs font-bold uppercase">Welcome, {{ auth()->user()->username }}!</span>
+                <x-dropdown>
+                    {{-- Trigger --}}
+                    <x-slot name="trigger">
+                        <button class="text-xs font-bold uppercase font-bold uppercase">
+                            Welcome, {{ auth()->user()->username }}!
+                        </button>
+                    </x-slot>
+                    {{-- Items - Links --}}
+                    <x-slot name="entries">
+                        @can('admin')
+                        <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
+                        <x-dropdown-item href="/admin/posts/create">Dashboard</x-dropdown-item>
+                        @endcan
+                        <x-dropdown-item>
+                            <form method="POST" action="/logout">
+                                @csrf
+                                <button type="submit" class="text-xs semi-bold ">Logout</button>
+                            </form>
+                        </x-dropdown-item>
+                    </x-slot>
+                </x-dropdown>
+
                 <form method="POST" action="/logout">
                     @csrf
                     <button type="submit" class="text-xs uppercase semi-bold text-blue-500 m-6">Logout</button>

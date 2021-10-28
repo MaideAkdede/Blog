@@ -2,19 +2,35 @@
     <section>
         <x-slot name="mainContent">
             <x-panel class="max-w-sm mx-auto">
-                <h1 class="text-center font-bold text-xl">Create New Post</h1>
-                <form action="/admin/posts" method="POST">
+                <h1 class="text-center font-bold text-xl">Publish New Post</h1>
+                <form action="/admin/posts"
+                      method="POST"
+                      enctype="multipart/form-data"
+                >
                     @csrf
-                    <div class="mb-6">
+                    <div class="mb-6 mt-6"
+                         x-data="{slug:''}">
                         <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
                                for="title">Title</label>
                         <input class="border border-gray-400 p-2 w-full"
                                type="text"
                                name="title"
                                id="title"
-                               value="{{old('title')}}"
+                               value="{{ old('title') }}"
+                               x-model="slug"
                         >
                         <x-error-message field="title"/>
+                        <div class="mb-6 mt-6">
+                            <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
+                                   for="slug">Slug</label>
+                            <input class="border border-gray-400 p-2 w-full"
+                                   type="text"
+                                   name="slug"
+                                   id="slug"
+                                   x-bind:value="slugify(slug).toLowerCase()"
+                            >
+                            <x-error-message field="slug"/>
+                        </div>
                     </div>
                     <div class="mb-6">
                         <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
@@ -51,6 +67,16 @@
                             @endforeach
                         </select>
                         <x-error-message field="category_id"/>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
+                               for="thumbnail">Thumbnail</label>
+                        <input class="border border-gray-400 p-2 w-full"
+                               type="file"
+                               name="thumbnail"
+                               id="thumbnail"
+                        >
+                        <x-error-message field="thumbnail"/>
                     </div>
                     <x-submit-button>Publish</x-submit-button>
                 </form>
