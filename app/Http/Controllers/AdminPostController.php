@@ -52,7 +52,7 @@ class AdminPostController extends Controller
             'title' => 'required|max:255',
             'excerpt' => 'required',
             'body' => 'required',
-            'slug' => 'required',
+            'slug' => ['required', Rule::unique('posts', 'slug')->ignore($post->id)],
             'thumbnail', 'image',
             'category_id' => 'required', Rule::exists('categories', 'id'),
         ]);
