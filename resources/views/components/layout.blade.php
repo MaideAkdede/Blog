@@ -37,15 +37,15 @@
                     {{-- Items - Links --}}
                     <x-slot name="entries">
                         @can('admin')
-                        <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
-                        <x-dropdown-item href="/dashboard" :active="request()->is('dashboard')">Dashboard</x-dropdown-item>
+                            <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">
+                                New Post
+                            </x-dropdown-item>
+                            <x-dropdown-item href="/admin/posts" :active="request()->is('admin/posts')">All Posts</x-dropdown-item>
                         @endcan
-                        <x-dropdown-item>
-                            <form method="POST" action="/logout">
-                                @csrf
-                                <button type="submit" class="text-xs semi-bold text-blue-500 hover:text-white">Logout</button>
-                            </form>
-                        </x-dropdown-item>
+                        <x-dropdown-item href="#"  class="text-red-500 hover:text-white hover:bg-red-500" x-data="{}" @click.prevent="document.querySelector('#logout-form').submit()">Log Out</x-dropdown-item>
+                        <form method="POST" action="/logout" id="logout-form" class="hidden">
+                            @csrf
+                        </form>
                     </x-slot>
                 </x-dropdown>
 
