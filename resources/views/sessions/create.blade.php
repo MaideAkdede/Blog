@@ -9,7 +9,7 @@
                     <x-form.input name="email" type="email"/>
                     <x-form.input name="password" type="password"/>
 
-                    <x-submit-button>Login</x-submit-button>
+                    <x-submit-button>Log in</x-submit-button>
                 </form>
             </main>
         </section>
