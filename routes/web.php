@@ -79,4 +79,5 @@ Route::post('/admin/posts', [AdminPostController::class, 'store'])->middleware('
 // View All Posts Page to Edit
 Route::get('/admin/posts', [AdminPostController::class, 'index'])->middleware('admins');
 // Edit page
-Route::get('/admin/posts/{post}/edit', [AdminPostController::class, 'edit'])->middleware('admins');
+Route::get('/admin/posts/{post:slug}/edit', [AdminPostController::class, 'edit'])->middleware('admins');
+Route::patch('/admin/posts/{post}', [AdminPostController::class, 'update'])->middleware('admins');

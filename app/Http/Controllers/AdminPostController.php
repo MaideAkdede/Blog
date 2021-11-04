@@ -14,10 +14,12 @@ class AdminPostController extends Controller
             'posts' => Post::paginate(50)
         ]);
     }
+
     public function create()
     {
         return view('admin.posts.create');
     }
+
     public function store()
     {
         $attributes = request()->validate([
@@ -29,8 +31,8 @@ class AdminPostController extends Controller
             'category_id' => 'required', Rule::exists('categories', 'id'),
         ]);
         //update thumbnail path
-        $attributes['thumbnail_path'] = request()->file('thumbnail')?->store('thumbnails');
-        unset($attributes['thumbnail']);
+        $attributes['thumbnail'] = request()->file('thumbnail')?->store('thumbnails');
+        //unset($attributes['thumbnail']);
 
         $attributes['user_id'] = auth()->id();
         $attributes['published_at'] = now('Europe/Brussels');
@@ -38,8 +40,26 @@ class AdminPostController extends Controller
         $post = Post::create($attributes);
         return redirect('/posts/' . $post->slug)->with('success', 'Your post has been created and is now published');
     }
+
     public function edit(Post $post)
     {
         return view('admin.posts.edit', ['post' => $post]);
+    }
+
+    public function update(Post $post)
+    {
+        $attributes = request()->validate([
+            'title' => 'required|max:255',
+            'excerpt' => 'required',
+            'body' => 'required',
+            'slug' => 'required',
+            'thumbnail', 'image',
+            'category_id' => 'required', Rule::exists('categories', 'id'),
+        ]);
+        if (isset($attributes['thumbnail'])) {
+            $attributes['thumbnail'] = request()->file('thumbnail')?->store('thumbnails');
+        }
+        $post->update($attributes);
+        return back()->with('success', 'Post successfully updated!');
     }
 }
