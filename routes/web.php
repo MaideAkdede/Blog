@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminPostController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
@@ -72,6 +73,10 @@ Route::get('/mc', function () {
 // Mailchimp Newsletter Post Add
 Route::post('/newsletter', NewsletterController::class);
 // Get the Form to add a Post
-Route::get('/admin/posts/create', [PostController::class, 'create'])->middleware('admins');
+Route::get('/admin/posts/create', [AdminPostController::class, 'create'])->middleware('admins');
 // Post datas into db
-Route::post('/admin/posts', [PostController::class, 'store'])->middleware('admins');
+Route::post('/admin/posts', [AdminPostController::class, 'store'])->middleware('admins');
+// View All Posts Page to Edit
+Route::get('/admin/posts', [AdminPostController::class, 'index'])->middleware('admins');
+// Edit page
+Route::get('/admin/posts/{post}/edit', [AdminPostController::class, 'edit'])->middleware('admins');
