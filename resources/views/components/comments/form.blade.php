@@ -15,9 +15,7 @@
                  class="mr-4 rounded-full">
             <label for="body" class="font-bold">Add a comment</label>
         </header>
-        <textarea placeholder="What are your thoughts, tell us about it!" class="p-2 w-full border border-gray-400"
-                  name="body" id="body" cols="30" rows="10"></textarea>
-        <x-error-message field="body"/>
+        <x-form.textarea name="body" placeholder="What are your thoughts? Tell us about it!"/>
         <div class="flex justify-end">
            <x-submit-button>Post my comment</x-submit-button>
         </div>

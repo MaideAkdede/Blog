@@ -38,21 +38,17 @@
                     <x-slot name="entries">
                         @can('admin')
                         <x-dropdown-item href="/admin/posts/create" :active="request()->is('admin/posts/create')">New Post</x-dropdown-item>
-                        <x-dropdown-item href="/admin/posts/create">Dashboard</x-dropdown-item>
+                        <x-dropdown-item href="/dashboard" :active="request()->is('dashboard')">Dashboard</x-dropdown-item>
                         @endcan
                         <x-dropdown-item>
                             <form method="POST" action="/logout">
                                 @csrf
-                                <button type="submit" class="text-xs semi-bold ">Logout</button>
+                                <button type="submit" class="text-xs semi-bold text-blue-500 hover:text-white">Logout</button>
                             </form>
                         </x-dropdown-item>
                     </x-slot>
                 </x-dropdown>
 
-                <form method="POST" action="/logout">
-                    @csrf
-                    <button type="submit" class="text-xs uppercase semi-bold text-blue-500 m-6">Logout</button>
-                </form>
             @endguest
             <a href="#newsletter"
                class="bg-blue-500 ml-3 rounded-full text-xs font-semibold text-white uppercase py-3 px-5">
@@ -86,7 +82,7 @@
                             Subscribe
                         </button>
                     </div>
-                    <x-error-message field="email"/>
+                    <x-form.error-message field="email"/>
                 </form>
             </div>
         </div>
