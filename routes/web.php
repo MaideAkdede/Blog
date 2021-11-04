@@ -43,6 +43,10 @@ Route::get('/login',
     [SessionController::class, 'create'])
     ->middleware('guest');
 //
+Route::get('/dashboard',
+    [SessionController::class, 'show'])
+    ->middleware('auth');
+//
 Route::post('/sessions',
     [SessionController::class, 'store'])
     ->middleware('guest');

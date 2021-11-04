@@ -48,4 +48,8 @@ class SessionController extends Controller
         auth()->logout();
         return redirect('/')->with('success', 'Goodbye ' . $username . '. You’re now disconnected !');
     }
+    public function show()
+    {
+        return view('/sessions.show');
+    }
 }
