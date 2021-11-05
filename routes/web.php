@@ -72,14 +72,21 @@ Route::get('/mc', function () {
 });
 // Mailchimp Newsletter Post Add
 Route::post('/newsletter', NewsletterController::class);
-// Get the Form to add a Post
-Route::get('/admin/posts/create', [AdminPostController::class, 'create'])->middleware('admins');
-// Post datas into db
-Route::post('/admin/posts', [AdminPostController::class, 'store'])->middleware('admins');
-// View All Posts Page to Edit
-Route::get('/admin/posts', [AdminPostController::class, 'index'])->middleware('admins');
-// Edit page
-Route::get('/admin/posts/{post}/edit', [AdminPostController::class, 'edit'])->middleware('admins');
-Route::patch('/admin/posts/{post}', [AdminPostController::class, 'update'])->middleware('admins');
-// Delete a post (without confirmation)
-Route::delete('/admin/posts/{post}', [AdminPostController::class, 'destroy'])->middleware('admins');
+
+Route::middleware('admins')->group(function () {
+    //
+        // php artisan route:list
+    Route::resource('admin/posts', AdminPostController::class)->except('show');
+    // Get the form to create a post
+        // Route::get('/admin/posts/create', [AdminPostController::class, 'create']);
+    // Submit and Post the data encoded in the form to create a post
+        // Route::post('/admin/posts', [AdminPostController::class, 'store']);
+    // Get all the post list in this page
+        // Route::get('/admin/posts', [AdminPostController::class, 'index']);
+    // Get the Form to edit one post
+        // Route::get('/admin/posts/{post}/edit', [AdminPostController::class, 'edit']);
+    // Post the update form of the post
+        // Route::patch('/admin/posts/{post}', [AdminPostController::class, 'update']);
+    // Delete the post
+        // Route::delete('/admin/posts/{post}', [AdminPostController::class, 'destroy']);
+});

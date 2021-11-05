@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        app()->bind(Newsletter::class, function (){
+        app()->bind(Newsletter::class, function () {
             $client = new ApiClient();
             $client->setConfig([
                 'apiKey' => config('services.mailchimp.key'),
@@ -39,8 +39,11 @@ class AppServiceProvider extends ServiceProvider
         // Paginator::useTailwind();
         Model::unguard();
 
-        Gate::define('admin', function (User $user){
-         return$user->username === 'maide';
+        Gate::define('admin', function (User $user) {
+            return $user->username === 'maide';
+        });
+        \Blade::if('admin', function (){
+            return request()->user()->can('admin');
         });
     }
 }
