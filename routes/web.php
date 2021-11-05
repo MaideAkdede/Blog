@@ -81,3 +81,5 @@ Route::get('/admin/posts', [AdminPostController::class, 'index'])->middleware('a
 // Edit page
 Route::get('/admin/posts/{post}/edit', [AdminPostController::class, 'edit'])->middleware('admins');
 Route::patch('/admin/posts/{post}', [AdminPostController::class, 'update'])->middleware('admins');
+// Delete a post (without confirmation)
+Route::delete('/admin/posts/{post}', [AdminPostController::class, 'destroy'])->middleware('admins');
